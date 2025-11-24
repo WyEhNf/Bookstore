@@ -11,7 +11,7 @@ add_executable(
     include/Finance.hpp
     include/Financesys.hpp
     include/read.hpp
-    include/user.hpp
+    include/User.hpp
     include/UserStore.hpp
     include/UserStack.hpp
     include/Book.hpp
