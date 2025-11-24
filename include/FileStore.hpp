@@ -93,7 +93,7 @@ class FileStore
             head_list.initialise(StoreName+"_head");
             if (!std::filesystem::exists(StoreName+"_body")) head = -1;
                 else head_list.get_info(head, 1);
-            array.initialise(Storename"_body");
+            array.initialise(StoreName"_body");
         }
 
         ~FileStore() {
@@ -295,4 +295,5 @@ class FileStore
 //     }
 //     return 0;
 // }
+
 #endif
