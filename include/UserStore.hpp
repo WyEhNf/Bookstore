@@ -62,7 +62,7 @@ class UserStore
         }
         void change_password(string ID,string CurPassword)
         {
-            if(!inStore) throw 0;
+            if(!inStore(ID)) throw 0;
             std::vector<User> res=UserList.qry((chars)(ID));
             UserList.del(ID,res[0]);
             res[0].password=CurPassword;
@@ -70,5 +70,6 @@ class UserStore
         }
 
 };
+
 
 #endif
