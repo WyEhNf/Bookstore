@@ -86,7 +86,7 @@ class Manager
             return true;
         }
 
-        bool ISBN_cmp(Book A,Book B)
+        bool ISBN_cmp(const Book &A,const Book &B) const
         {
             return A.ISBN<B.ISBN;
         }
@@ -397,5 +397,6 @@ class Manager
         Finance_Record.update(rec);
     }
 }BookManager;
+
 
 #endif
