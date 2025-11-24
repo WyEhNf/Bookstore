@@ -10,7 +10,7 @@ add_executable(
     include/FileStore.hpp
     include/Finance.hpp
     include/Financesys.hpp
-    include/read.hpp
+    include/Read.hpp
     include/User.hpp
     include/UserStore.hpp
     include/UserStack.hpp
