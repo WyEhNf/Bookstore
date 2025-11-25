@@ -7,6 +7,15 @@
 #include <iostream>
 #include <cstdio>
 std::vector<std::pair<chars,string> > LOG;
+inline void checkStr(Read x)
+{
+    Read cop=x;
+    while(cop.length()!=0)
+    {
+        string cur=cop.get_string();
+        for(auto c: cur) if(!isprint(c)) throw 0;
+    }
+}
 int main()
 {
     // std::freopen("../read.in","r",stdin);
@@ -23,6 +32,7 @@ int main()
             getline(std::cin,st);
             string stcop=st;
             Read a(st);
+            checkStr(a);
             if(!a.length()) continue;
             string op=a.get_string();
             // std::cerr<<op<<'\n';
@@ -96,4 +106,5 @@ int main()
     return 0;
 
 }
+
 
