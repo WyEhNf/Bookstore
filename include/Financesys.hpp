@@ -44,7 +44,7 @@ class Finance_Sys
         void print(Read &a)
         {
             User cur=Stack.getTop();
-            if(cur.Privilege<7) throw 0;
+            if(cur.Privilege<7){throw 0;}
             Finance res=Finance();
             if(a.length()==0)
             {

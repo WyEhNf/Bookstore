@@ -79,7 +79,7 @@ class UserStack
         {
             checkString(a);
             string ID=a.get_string();
-            std::cerr<<"ID "<<ID<<'\n';
+            // std::cerr<<"ID "<<ID<<'\n';
             if(a.length()!=0)
             {
                 string passwd=a.get_string();
@@ -88,6 +88,7 @@ class UserStack
                 User cur;
                 // std::cerr<<"!!\n";
                 if(!buc.get_user(ID,cur)) throw 0;
+                // std::cout<<"GET";
                 if((Chars)(passwd)!=cur.password) throw 0;
                 Stack.push_back(ID);
             }else{

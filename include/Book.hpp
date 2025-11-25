@@ -3,6 +3,7 @@
 #include<iostream>
 #include<cstring>
 #include<string.h>
+#include<iomanip>
 #include "Chars.hpp"
 
 class Book
@@ -56,7 +57,7 @@ class Book
 };
 std::ostream &operator << (std:: ostream &out,const Book & obj)
 {
-    out << obj.ISBN <<'\t'<<obj.BookName<<'\t'<<obj.Keyword<<'\t'<<obj.Price<<'\t'<<obj.Quantity<<'\n';
+    out << obj.ISBN <<'\t'<<obj.BookName<<'\t'<<obj.Author<<'\t'<<obj.Keyword<<'\t'<<std::fixed<<std::setprecision(2)<<obj.Price<<std::setprecision(0)<<'\t'<<obj.Quantity<<'\n';
     return out;
 }
 

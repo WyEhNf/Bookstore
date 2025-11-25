@@ -192,7 +192,7 @@ class Manager
             checkEmpty(a);
             string opt=getOpt(msg),word=getWord(msg);
             if(opt.size()==0||word.size()==0) throw 0;
-            std::cerr<<"Show msg obtained:"<<opt<<' '<<word<<'\n';
+            // std::cerr<<"Show msg obtained:"<<opt<<' '<<word<<'\n';
             if(opt=="-ISBN")
             {
                 Book res;
@@ -226,10 +226,10 @@ class Manager
                 std::vector<Book> res;
                 if(!check_Name(word)) throw 0;
                 word.erase(0,1),word.erase(word.size()-1,1);
-                std::cerr<<word<<'\n';
+                // std::cerr<<word<<'\n';
                 if(find_Author(word,res))
                 {
-                    std::cerr<<"Found "<<res.size()<<'\n';
+                    // std::cerr<<"Found "<<res.size()<<'\n';
                     print(res);
                 }else std::cout<<'\n';
             }else throw 0;
@@ -245,7 +245,7 @@ class Manager
             checkEmpty(a);
             Stack.buc.UserList.del(cur.UserID,cur);
             std::vector<int> res=ISBN_Store.qry(msg);
-            std::cerr<<"select msg obtained\n";
+            // std::cerr<<"select msg obtained\n";
             if(res.size()==0)
             {
                 int ID=++cnt;
@@ -253,7 +253,7 @@ class Manager
                 newBook.ISBN=msg;
                 BookStore.ins(ID,newBook);
                 ISBN_Store.ins(msg,ID);
-                // Stack.curBook.pop_back();
+                Stack.curBook.pop_back();
                 Stack.curBook.push_back(cnt);
             }else{
                 Stack.curBook.pop_back();
@@ -284,7 +284,7 @@ class Manager
 
         BookStore.del(target.ID,target);
         target.Quantity-=quantity;
-        std::cout<<std::fixed<<std::setprecision(2)<<1.0*quantity*target.Price<<std::setprecision(0)<<'\n';
+        std::cout<<std::fixed<<std::setprecision(2)<<1.0*quantity*target.Price<<'\t'<<std::setprecision(0)<<'\n';
         BookStore.ins(target.ID,target);
 
         Finance rec(Finance_Record.cnt+1,1.0*quantity*target.Price,0);
@@ -294,10 +294,11 @@ class Manager
     void check_modify(Read &a)
     {
         User cur=Stack.getTop();
+        // std::cout<<"USER:"<<cur.UserID<<' '<<cur.Privilege<<' ';
+        // std::cout<<"BOOKSTACK"<<Stack.curBook.size()<<' ';
         if(cur.Privilege<3) throw 0;
-    
         if(Stack.getBook()==-1) throw 0;
-        
+        // std::cout<<"HaveBook Permitted";
         std::map<string,bool> op;
         op.clear();
 
@@ -345,7 +346,7 @@ class Manager
         Read cop=a;
         check_modify(cop);
 
-        std::cerr<<"modify_check passed.\n";
+        // std::cerr<<"modify_check passed.\n";
 
         User cur=Stack.getTop();
         Book selected;
