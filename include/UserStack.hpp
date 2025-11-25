@@ -127,29 +127,30 @@ class UserStack
             if(!a.length())
             {
                 User cur=getTop(); 
-                if(cur.Privilege<=target.Privilege) throw 0;
+                if(cur.Privilege<=target.Privilege&&cur.Privilege!=7) throw 0;
                 buc.change_password(ID,pass1);
             }else{
                 string pass2=a.get_string();
                 checkEmpty(a);
-                if(target.password!=pass2) throw 0;
+                if(target.password!=pass1) throw 0;
                 buc.change_password(ID,pass1,pass2);
             }
         }
         void Create(Read &a)
         {
+            User op=getTop();
             checkString(a);
             string ID=a.get_string();
             checkString(a);
             User cur;
-            if(!buc.get_user(ID,cur)) throw 0;
+            if(buc.get_user(ID,cur)) throw 0;
             string passwd=a.get_string();
             checkString(a);
             string pri_st=a.get_string();
             checkString(a);
             int pri=string_to_int(pri_st);
             if(!checkPrivilege(pri)) throw 0;
-            if(pri>=cur.Privilege) throw 0;
+            if(pri>=op.Privilege) throw 0;
             string username=a.get_string();
             checkEmpty(a);
             buc.user_create(ID,passwd,username,pri);
@@ -173,4 +174,3 @@ class UserStack
 
 
 #endif
-
