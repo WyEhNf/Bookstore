@@ -339,7 +339,7 @@ class Manager
             {
                 if(word.size()>13) throw 0;
                 double price=string_to_double(word);
-                if(price<=0) throw 0;
+                if(price<0) throw 0;
             }else throw 0;
         }
     }
@@ -440,6 +440,7 @@ class Manager
 
 
 #endif
+
 
 
 
