@@ -86,7 +86,7 @@ class Manager
             return true;
         }
 
-        bool ISBN_cmp(const Book &A,const Book &B) const
+        static bool ISBN_cmp(const Book &A,const Book &B) 
         {
             return A.ISBN<B.ISBN;
         }
@@ -109,6 +109,7 @@ class Manager
         {
             std::vector<int> res=BookName_Store.qry((chars)(BookName));
             if(res.size()==0) return false;
+            obj.resize((int)(res.size()));
             for(int i=0;i<obj.size();++i) find_ID(res[i],obj[i]);
             sort(obj.begin(),obj.end(),ISBN_cmp);
             return true;
@@ -118,6 +119,7 @@ class Manager
         {
             std::vector<int> res=Keyword_Store.qry((chars)(Keyword));
             if(res.size()==0) return false;
+            obj.resize((int)(res.size()));
             for(int i=0;i<obj.size();++i) find_ID(res[i],obj[i]);
             sort(obj.begin(),obj.end(),ISBN_cmp);return true;
         }
@@ -126,14 +128,27 @@ class Manager
         {
             std::vector<int> res=Author_Store.qry((chars)(Author));
             if(res.size()==0) return false;
-            for(int i=0;i<obj.size();++i) find_ID(res[i],obj[i]);
-            sort(obj.begin(),obj.end(),ISBN_cmp);return true;
+            // std::cerr<<res[0]<<'\n';
+            obj.resize((int)(res.size()));
+            for(int i=0;i<res.size();++i)
+            {
+                // std::cerr<<res[i]<<' ';
+                find_ID(res[i],obj[i]);
+            } 
+            // std::cerr<<'\n';
+            sort(obj.begin(),obj.end(),ISBN_cmp);
+            // for(auto x: obj) std::cerr<<x<<'\n'; 
+            return true;
         }
         
         void print (std::vector<Book> res)
         {
-            for(auto vec: res) std::cout<<vec<<'\n';
-            std::cout<<'\n';
+            // std::cout<<res.size()<<'\n';
+            // std::cerr<<"PRINT "<<res.size()<<'\n';
+            if(res.size()==0) std::cout<<'\n';
+            for(auto vec: res) std::cout<<vec;
+            // std::cout<<'\n';
+            // std::cerr<<"DONE\n";
         }
 
         string getOpt(string msg)
@@ -177,13 +192,14 @@ class Manager
             checkEmpty(a);
             string opt=getOpt(msg),word=getWord(msg);
             if(opt.size()==0||word.size()==0) throw 0;
+            std::cerr<<"Show msg obtained:"<<opt<<' '<<word<<'\n';
             if(opt=="-ISBN")
             {
                 Book res;
                 if(!check_ISBN(word)) throw 0;
                 if(find_ISBN(word,res))
                 {
-                    std::cout<<res<<'\n';                    
+                    std::cout<<res;                    
                 }else std::cout<<'\n';
             }else if(opt=="-name")
             {
@@ -210,8 +226,10 @@ class Manager
                 std::vector<Book> res;
                 if(!check_Name(word)) throw 0;
                 word.erase(0,1),word.erase(word.size()-1,1);
+                std::cerr<<word<<'\n';
                 if(find_Author(word,res))
                 {
+                    std::cerr<<"Found "<<res.size()<<'\n';
                     print(res);
                 }else std::cout<<'\n';
             }else throw 0;
@@ -227,6 +245,7 @@ class Manager
             checkEmpty(a);
             Stack.buc.UserList.del(cur.UserID,cur);
             std::vector<int> res=ISBN_Store.qry(msg);
+            std::cerr<<"select msg obtained\n";
             if(res.size()==0)
             {
                 int ID=++cnt;
@@ -234,7 +253,7 @@ class Manager
                 newBook.ISBN=msg;
                 BookStore.ins(ID,newBook);
                 ISBN_Store.ins(msg,ID);
-                Stack.curBook.pop_back();
+                // Stack.curBook.pop_back();
                 Stack.curBook.push_back(cnt);
             }else{
                 Stack.curBook.pop_back();
@@ -245,6 +264,7 @@ class Manager
 
     void buy(Read &a)
     {
+        // std::cerr<<"Create a trade\n";
         User cur=Stack.getTop();
         if(cur.Privilege<1) throw 0;
         checkString(a);
@@ -255,8 +275,11 @@ class Manager
         if(!find_ISBN(ISBN,target)) throw 0;
         string quat_st=a.get_string();
         checkEmpty(a);
+        // std::cerr<<"Trade msg obtained:"<<ISBN<<' '<<quat_st<<' '<<quat_st.size()<<'\n';
         if(!isInteger(quat_st)) throw 0;
         int quantity=string_to_int(quat_st);
+        // std::cerr<<"Integer get:"<<quantity<<'\n';
+        // std::cerr<<"Storage: "<<target.Quantity<<'\n';
         if(quantity<0||quantity>target.Quantity) throw 0;
 
         BookStore.del(target.ID,target);
@@ -277,14 +300,21 @@ class Manager
         
         std::map<string,bool> op;
         op.clear();
+
+        // std::cerr<<"modify_checking started.\n";
+        // std::cerr<<a.length()<<'\n';
+        checkString(a);
         while(a.length()!=0)
         {
             string msg=a.get_string();
-            checkEmpty(a);
+            // checkEmpty(a);
             string opt=getOpt(msg),word=getWord(msg);
+
+            // std::cerr<<"msg: "<<opt<<' '<<word<<'\n';
             if(opt.size()==0||word.size()==0) throw 0;
             if(op.find(opt)!=op.end()) throw 0;
-            op[opt]=1;
+            op[opt]=1;            
+
             if(opt=="-ISBN")
             {
                 Book trial;
@@ -314,6 +344,9 @@ class Manager
     {
         Read cop=a;
         check_modify(cop);
+
+        std::cerr<<"modify_check passed.\n";
+
         User cur=Stack.getTop();
         Book selected;
         find_ID(Stack.getBook(),selected);
@@ -324,7 +357,7 @@ class Manager
         while(a.length())
         {
             string msg=a.get_string();
-            checkEmpty(a);
+            // checkEmpty(a);
             string opt=getOpt(msg),word=getWord(msg);
             if(opt!="-ISBN"&&opt!="-price") word.erase(0,1),word.erase(word.size()-1,1);
             if(opt=="-ISBN")
@@ -336,6 +369,7 @@ class Manager
             }
             else if(opt=="-author")
             {
+                // std::cerr<<"Modify to"<<word<<'\n';
                 selected.Author=(Chars)(word);
             }else if(opt=="-keyword")
             {
@@ -360,6 +394,7 @@ class Manager
                         cur="";
                     }else cur+=c;
                 }
+                Keyword_Store.ins(cur,selected.ID);
 
             }else if(opt=="-price")
             {
