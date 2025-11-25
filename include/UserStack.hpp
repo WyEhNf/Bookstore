@@ -94,6 +94,7 @@ class UserStack
                 if(getTop().Privilege<=cur.Privilege) throw 0;
                 Stack.push_back(ID);
             }
+            curBook.push_Back(-1);
         }
         void Logout()
         {
@@ -172,3 +173,4 @@ class UserStack
 
 
 #endif
+
