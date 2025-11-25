@@ -420,7 +420,7 @@ class Manager
         if(!isInteger(quant_st)) throw 0;
         int quantity=string_to_int(quant_st);
         if(quantity<=0) throw 0;
-        double totCost=string_to_double(quant_st);
+        double totCost=string_to_double(totCost_st);
         if(totCost<=0) throw 0; 
         if(Stack.getBook()==-1) throw 0;
         Book selected;
@@ -436,3 +436,4 @@ class Manager
 
 
 #endif
+
