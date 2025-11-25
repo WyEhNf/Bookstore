@@ -153,6 +153,7 @@ class UserStack
             checkString(a);
             int pri=string_to_int(pri_st);
             if(!checkPrivilege(pri)) throw 0;
+            if(!isInteger(pri_st)) throw 0; 
             if(pri>=op.Privilege) throw 0;
             string username=a.get_string();
             checkEmpty(a);
@@ -177,3 +178,4 @@ class UserStack
 
 
 #endif
+
