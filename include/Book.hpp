@@ -57,6 +57,8 @@ class Book
 std::ostream &operator << (std:: ostream &out,const Book & obj)
 {
     out << obj.ISBN <<'\t'<<obj.BookName<<'\t'<<obj.Keyword<<'\t'<<obj.Price<<'\t'<<obj.Quantity<<'\n';
+    return out;
 }
+
 
 #endif
