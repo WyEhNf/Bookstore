@@ -22,7 +22,9 @@ class Manager
     public:
         Manager()
         {
-            List.initialise("Manager_List"); cnt=0;
+            List.initialise("Manager_List");
+            if (std::filesystem::exists("Book_Manager_tot")) List.get_info(cnt, 1);
+            else cnt=0; 
             BookStore.Init("BookStore");
             ISBN_Store.Init("ISBN_Storage"); Keyword_Store.Init("Keyword_Storage");
             BookName_Store.Init("BookName_Storage"); Author_Store.Init("Author_Storage");
@@ -436,5 +438,6 @@ class Manager
 
 
 #endif
+
 
 
