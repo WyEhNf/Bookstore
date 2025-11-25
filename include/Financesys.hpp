@@ -57,6 +57,7 @@ class Finance_Sys
                 int Count=string_to_int(Count_st);
                 if(a.length()) throw 0;
                 if(Count>cnt) throw 0;
+                if(Count<0) throw 0;
                 if(Count==0) {std::cout<<'\n'; return;}
                 if(Count==cnt){std::cout<<*(FinanceStore.qry(cnt).begin())<<'\n'; return;}
                 Finance R=*(FinanceStore.qry(cnt).begin());
@@ -68,4 +69,5 @@ class Finance_Sys
 
 
 #endif
+
 
