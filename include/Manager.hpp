@@ -53,7 +53,7 @@ class Manager
         bool check_Name(string &Name)
         {
             int len=Name.size();
-            if(Name.size()>60||Name.size()<3) throw 0;
+            if(Name.size()>62||Name.size()<3) throw 0;
             if(Name[0]!='"'||Name[len-1]!='"') throw 0;
             for(int i=1;i<len-1;++i)
                  if(!checkChar(Name[i])||Name[i]=='"') throw 0;
@@ -438,6 +438,7 @@ class Manager
 
 
 #endif
+
 
 
 
