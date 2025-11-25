@@ -280,7 +280,7 @@ class Manager
         int quantity=string_to_int(quat_st);
         // std::cerr<<"Integer get:"<<quantity<<'\n';
         // std::cerr<<"Storage: "<<target.Quantity<<'\n';
-        if(quantity<0||quantity>target.Quantity) throw 0;
+        if(quantity<=0||quantity>target.Quantity) throw 0;
 
         BookStore.del(target.ID,target);
         target.Quantity-=quantity;
@@ -436,4 +436,5 @@ class Manager
 
 
 #endif
+
 
