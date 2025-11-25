@@ -54,6 +54,7 @@ int string_to_int(std::string &x) {
 bool isInteger(std:: string &x)
 {
     for(auto c: x) if(c=='.') return false;
+    return true;
 }
 
 double string_to_double(std::string &x) {

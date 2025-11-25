@@ -32,6 +32,7 @@ class UserStore
         {
             std::vector<User> res=UserList.qry((chars)(ID));
             if(res.size()==0) return false;
+            return true;
         }
         bool get_user(string ID,User &cur)
         {

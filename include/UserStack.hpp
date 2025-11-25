@@ -79,12 +79,14 @@ class UserStack
         {
             checkString(a);
             string ID=a.get_string();
+            std::cerr<<"ID "<<ID<<'\n';
             if(a.length()!=0)
             {
-                
                 string passwd=a.get_string();
+                // std::cerr<<passwd<<'\n';
                 if(a.length()) throw 0;
                 User cur;
+                // std::cerr<<"!!\n";
                 if(!buc.get_user(ID,cur)) throw 0;
                 if((Chars)(passwd)!=cur.password) throw 0;
                 Stack.push_back(ID);
@@ -94,7 +96,7 @@ class UserStack
                 if(getTop().Privilege<=cur.Privilege) throw 0;
                 Stack.push_back(ID);
             }
-            curBook.push_Back(-1);
+            curBook.push_back(-1);
         }
         void Logout()
         {

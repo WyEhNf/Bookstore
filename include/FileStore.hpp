@@ -82,18 +82,18 @@ class FileStore
 
     public:
 
-        FileStore() {
-           head_list.initialise("_head");
-            if (!std::filesystem::exists("_body")) head = -1;
-                else head_list.get_info(head, 1);
-            array.initialise("_body");
-        }
+        // FileStore() {
+        //    head_list.initialise("_head");
+        //     if (!std::filesystem::exists("_body")) head = -1;
+        //         else head_list.get_info(head, 1);
+        //     array.initialise("_body");
+        // }
         void Init(string StoreName="")
         {
             head_list.initialise(StoreName+"_head");
             if (!std::filesystem::exists(StoreName+"_body")) head = -1;
                 else head_list.get_info(head, 1);
-            array.initialise(StoreName"_body");
+            array.initialise(StoreName+"_body");
         }
 
         ~FileStore() {

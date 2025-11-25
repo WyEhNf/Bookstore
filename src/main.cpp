@@ -17,7 +17,7 @@ int main()
     while(!std::cin.eof())
     {
         ++batch;
-        std::cout<<batch<<' ';
+        // std::cout<<batch<<' ';
         try{
             std::string st;
             getline(std::cin,st);
@@ -90,7 +90,7 @@ int main()
             LOG.push_back(std::make_pair(cur.UserID,stcop));
         }catch(int)
         {
-            std::cout<<"Request Failed\n";
+            std::cout<<"InValid\n";
         }
     }
     return 0;
