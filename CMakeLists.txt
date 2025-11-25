@@ -3,4 +3,4 @@ project(BookStore)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(BookStore src/main.cpp)
+add_executable(code src/main.cpp)
