@@ -60,7 +60,7 @@ class Finance_Sys
                 if(Count==0) {std::cout<<'\n'; return;}
                 if(Count==cnt){std::cout<<*(FinanceStore.qry(cnt).begin())<<'\n'; return;}
                 Finance R=*(FinanceStore.qry(cnt).begin());
-                Finance L=*(FinanceStore.qry(cnt).begin());
+                Finance L=*(FinanceStore.qry(cnt-Count).begin());
                 std::cout<<(R-L)<<'\n';
             }
         }
@@ -68,3 +68,4 @@ class Finance_Sys
 
 
 #endif
+
