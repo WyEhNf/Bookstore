@@ -326,7 +326,7 @@ class Manager
             // checkEmpty(a);
             string opt=getOpt(msg),word=getWord(msg);
 
-            std::cerr<<"msg: "<<opt<<' '<<word<<'\n';
+            // std::cerr<<"msg: "<<opt<<' '<<word<<'\n';
             if(opt.size()==0||word.size()==0) throw 0;
             if(op.find(opt)!=op.end()) throw 0;
 
@@ -339,7 +339,7 @@ class Manager
                     else a.a.erase(0,1);
                 }
             }
-            std::cerr<<"true word:"<<word<<' '<<a.a<<'\n';
+            // std::cerr<<"true word:"<<word<<' '<<a.a<<'\n';
             op[opt]=1;            
 
             if(opt=="-ISBN")
@@ -470,3 +470,4 @@ class Manager
 
 
 #endif
+
