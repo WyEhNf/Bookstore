@@ -4,6 +4,7 @@
 #include "../include/Read.hpp"
 #include "../include/Financesys.hpp"
 #include <string>
+#include <assert.h>
 #include <iostream>
 #include <cstdio>
 std::vector<std::pair<chars,string> > LOG;
@@ -13,7 +14,7 @@ inline void checkStr(Read x)
     while(cop.length()!=0)
     {
         string cur=cop.get_string();
-        for(auto c: cur) if(!isprint(c)) throw 0;
+        for(auto c: cur) if(!isprint(c)) {assert(0);throw 0;}
     }
 }
 int main()
@@ -106,5 +107,6 @@ int main()
     return 0;
 
 }
+
 
 
