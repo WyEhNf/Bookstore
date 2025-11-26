@@ -22,8 +22,8 @@ class Manager
     public:
         Manager()
         {
-            List.initialise("Manager_List"); 
-            if (std::filesystem::exists("Book_Manager_tot")) List.get_info(cnt, 1);
+            List.initialise("Manager_List");
+            if (std::filesystem::exists("Manager_List")) List.get_info(cnt, 1);
             else cnt=0; 
             BookStore.Init("BookStore");
             ISBN_Store.Init("ISBN_Storage"); Keyword_Store.Init("Keyword_Storage");
@@ -36,6 +36,7 @@ class Manager
 
         bool checkChar(char c)
         {
+            return isprint(c);
             unsigned char uc = static_cast<unsigned char>(c);
             return uc >= 32 && uc <= 126;
         }
@@ -180,7 +181,6 @@ class Manager
         void show(Read &a)
         {
             User cur=Stack.getTop();
-            if(Stack.Stack.empty()) throw 0;
             if(cur.Privilege<1) throw 0;
             if(a.length()==0)
             {
@@ -194,7 +194,7 @@ class Manager
             string msg=a.get_string();
             string opt=getOpt(msg),word=getWord(msg);
             if(opt.size()==0||word.size()==0) throw 0;
-             if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
+            if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
             {
                 while(a.a.length()!=0)
                 {
@@ -204,6 +204,7 @@ class Manager
                 }
             }
             checkEmpty(a);
+            
             // std::cerr<<"Show msg obtained:"<<opt<<' '<<word<<'\n';
             if(opt=="-ISBN")
             {
@@ -250,7 +251,6 @@ class Manager
         void select(Read &a)
         {
             User cur=Stack.getTop();
-            if(Stack.Stack.empty()) throw 0;
             if(cur.Privilege<3) throw 0;
             checkString(a);
             string msg=a.get_string();
@@ -279,7 +279,6 @@ class Manager
     {
         // std::cerr<<"Create a trade\n";
         User cur=Stack.getTop();
-        if(Stack.Stack.empty()) throw 0;
         if(cur.Privilege<1) throw 0;
         checkString(a);
         string ISBN=a.get_string();
@@ -294,7 +293,7 @@ class Manager
         int quantity=string_to_int(quat_st);
         // std::cerr<<"Integer get:"<<quantity<<'\n';
         // std::cerr<<"Storage: "<<target.Quantity<<'\n';
-        if(quantity<0||quantity>target.Quantity) throw 0;
+        if(quantity<=0||quantity>target.Quantity) throw 0;
 
         BookStore.del(target.ID,target);
         target.Quantity-=quantity;
@@ -308,7 +307,6 @@ class Manager
     void check_modify(Read &a)
     {
         User cur=Stack.getTop();
-        if(Stack.Stack.empty()) throw 0;
         // std::cout<<"USER:"<<cur.UserID<<' '<<cur.Privilege<<' ';
         // std::cout<<"BOOKSTACK"<<Stack.curBook.size()<<' ';
         if(cur.Privilege<3) throw 0;
@@ -329,8 +327,8 @@ class Manager
             // std::cerr<<"msg: "<<opt<<' '<<word<<'\n';
             if(opt.size()==0||word.size()==0) throw 0;
             if(op.find(opt)!=op.end()) throw 0;
-
-            if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
+            op[opt]=1;              
+             if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
             {
                 while(a.a.length()!=0)
                 {
@@ -339,9 +337,6 @@ class Manager
                     else a.a.erase(0,1);
                 }
             }
-            // std::cerr<<"true word:"<<word<<' '<<a.a<<'\n';
-            op[opt]=1;            
-
             if(opt=="-ISBN")
             {
                 Book trial;
@@ -372,6 +367,9 @@ class Manager
     {
         Read cop=a;
         check_modify(cop);
+
+        // std::cerr<<"modify_check passed.\n";
+
         User cur=Stack.getTop();
         Book selected;
         find_ID(Stack.getBook(),selected);
@@ -444,7 +442,6 @@ class Manager
     void import(Read &a)
     {
         User cur=Stack.getTop();
-        if(Stack.Stack.empty()) throw 0;
         if(cur.Privilege<3) throw 0;
         checkString(a);
         string quant_st=a.get_string();
@@ -454,6 +451,7 @@ class Manager
         if(!isInteger(quant_st)) throw 0;
         int quantity=string_to_int(quant_st);
         if(quantity<=0) throw 0;
+        if(totCost_st.size()>13) throw 0;
         double totCost=string_to_double(totCost_st);
         if(totCost<=0) throw 0; 
         if(Stack.getBook()==-1) throw 0;
@@ -470,4 +468,3 @@ class Manager
 
 
 #endif
-
