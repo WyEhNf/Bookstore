@@ -13,6 +13,7 @@ struct chars {
 
         chars(std::string &x) {
             int len = x.length();
+            if(len>70) throw 0;
             for (int i = 0; i < len; i++) a[i] = x[i];
             a[len] = 0;
         }
@@ -70,4 +71,5 @@ std::ostream& operator<<(std::ostream& out, const chars& now) {
 
 
 #endif
+
 
