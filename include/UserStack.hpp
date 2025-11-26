@@ -27,6 +27,7 @@ class UserStack
 
         bool checkChar(char c)
         {
+            return isprint(c);
             unsigned char uc = static_cast<unsigned char>(c);
             return uc >= 32 && uc <= 126;
         }
@@ -178,4 +179,5 @@ class UserStack
 
 
 #endif
+
 
