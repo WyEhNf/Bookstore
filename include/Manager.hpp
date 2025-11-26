@@ -197,6 +197,7 @@ class Manager
             if(opt.size()==0||word.size()==0) throw 0;
             if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
             {
+                assert(0);
                 while(a.a.length()!=0)
                 {
                     word+=a.a[0];
@@ -388,6 +389,7 @@ class Manager
             string opt=getOpt(msg),word=getWord(msg);
             if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&(opt=="-author"||opt=="-keyword"||opt=="-name"))
             {
+                assert(0);
                 while(a.a.length()!=0)
                 {
                     word+=a.a[0];
@@ -473,4 +475,5 @@ class Manager
 
 
 #endif
+
 
