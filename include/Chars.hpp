@@ -7,7 +7,7 @@
 
 struct chars {
     public:
-        char a[61];
+        char a[65];
 
         chars(){a[0] = 0;}
 
@@ -67,5 +67,6 @@ std::ostream& operator<<(std::ostream& out, const chars& now) {
     out << now.a;
     return out;
 }
+
 
 #endif
