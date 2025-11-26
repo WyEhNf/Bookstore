@@ -50,6 +50,7 @@ int string_to_int(std::string &x) {
         if (res > 2147483647) throw 0;
     }
     if(res==0&&k!=0) throw 0; 
+    if(res!=0&&x[0]=='0') throw 0;
     return zf ? -res : res;
 };
 
@@ -87,6 +88,7 @@ double string_to_double(std::string &x) {
     if (!lsize) throw 0;//不能 .12
     if (turn && !rsize) throw 0;//不能 12.
     if (rsize > 2) throw 0;
+    if((floor(res)!=0&&x[0]=='0') throw 0;
     return zf ? -res : res;
 }
 
