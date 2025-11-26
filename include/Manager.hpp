@@ -1,6 +1,7 @@
 #ifndef MANAGER_HPP
 #define MANAGER_HPP
 
+#include <assert.h>
 #include <iomanip>
 #include <iostream>
 #include <vector>
@@ -36,7 +37,8 @@ class Manager
 
         bool checkChar(char c)
         {
-            return isprint(c);
+            if(isprint(c)) return true;
+            else assert(0);
             unsigned char uc = static_cast<unsigned char>(c);
             return uc >= 32 && uc <= 126;
         }
