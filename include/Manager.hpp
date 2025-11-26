@@ -1,6 +1,7 @@
 #ifndef MANAGER_HPP
 #define MANAGER_HPP
 
+#include <assert.h>
 #include <iomanip>
 #include <iostream>
 #include <vector>
@@ -331,6 +332,7 @@ class Manager
             op[opt]=1;              
              if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
             {
+                assert(0);
                 while(a.a.length()!=0)
                 {
                     word+=a.a[0];
@@ -471,3 +473,4 @@ class Manager
 
 
 #endif
+
