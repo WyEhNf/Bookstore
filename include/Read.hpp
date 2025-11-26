@@ -19,7 +19,7 @@ class Read {
         Read() {}
         Read(std::string a) :a(a) {
             check();
-        }
+        }    
 
         int length() {
             check();
