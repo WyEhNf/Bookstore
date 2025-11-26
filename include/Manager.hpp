@@ -202,6 +202,7 @@ class Manager
                     if(a.a[0]=='"') {a.a.erase(0,1); break;}
                     else a.a.erase(0,1);
                 }
+                if(a.a.length()) if(a.a[0]!=' ') throw 0;
             }
             checkEmpty(a);
             
@@ -336,6 +337,7 @@ class Manager
                     if(a.a[0]=='"') {a.a.erase(0,1); break;}
                     else a.a.erase(0,1);
                 }
+                if(a.a.length()) if(a.a[0]!=' ') throw 0;
             }
             if(opt=="-ISBN")
             {
@@ -390,6 +392,7 @@ class Manager
                     if(a.a[0]=='"') {a.a.erase(0,1); break;}
                     else a.a.erase(0,1);
                 }
+                if(a.a.length()) if(a.a[0]!=' ') throw 0;
             }
             if(opt!="-ISBN"&&opt!="-price") word.erase(0,1),word.erase(word.size()-1,1);
             if(opt=="-ISBN")
