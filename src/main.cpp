@@ -31,6 +31,14 @@ int main()
         try{
             std::string st;
             getline(std::cin,st);
+
+            bool flg=0;
+            for(auto c: st) if(c!=' ') {flg=1;break;}
+            if(!flg) continue;
+            if(st.size()==0) continue;
+            if(st[0]==' ') throw 0;
+            if(st[(int)(st.size())-1]==' ') throw 0;
+                        
             string stcop=st;
             Read a(st);
             checkStr(a);
@@ -107,6 +115,7 @@ int main()
     return 0;
 
 }
+
 
 
 
