@@ -1,6 +1,7 @@
 #ifndef USERSTACK_HPP
 #define USERSTACK_HPP
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include "User.hpp"
@@ -27,7 +28,8 @@ class UserStack
 
         bool checkChar(char c)
         {
-            return isprint(c);
+            if(isprint(c)) return true;
+            else assert(0);
             unsigned char uc = static_cast<unsigned char>(c);
             return uc >= 32 && uc <= 126;
         }
@@ -179,5 +181,6 @@ class UserStack
 
 
 #endif
+
 
 
