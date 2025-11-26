@@ -1,7 +1,6 @@
 #ifndef MANAGER_HPP
 #define MANAGER_HPP
 
-#include <assert.h>
 #include <iomanip>
 #include <iostream>
 #include <vector>
@@ -193,21 +192,9 @@ class Manager
             }
             
             string msg=a.get_string();
+            checkEmpty(a);
             string opt=getOpt(msg),word=getWord(msg);
             if(opt.size()==0||word.size()==0) throw 0;
-            if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
-            {
-                assert(0);
-                while(a.a.length()!=0)
-                {
-                    word+=a.a[0];
-                    if(a.a[0]=='"') {a.a.erase(0,1); break;}
-                    else a.a.erase(0,1);
-                }
-                if(a.a.length()) if(a.a[0]!=' ') throw 0;
-            }
-            checkEmpty(a);
-            
             // std::cerr<<"Show msg obtained:"<<opt<<' '<<word<<'\n';
             if(opt=="-ISBN")
             {
@@ -330,18 +317,8 @@ class Manager
             // std::cerr<<"msg: "<<opt<<' '<<word<<'\n';
             if(opt.size()==0||word.size()==0) throw 0;
             if(op.find(opt)!=op.end()) throw 0;
-            op[opt]=1;              
-             if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&&(opt=="-author"||opt=="-keyword"||opt=="-name"))
-            {
-                assert(0);
-                while(a.a.length()!=0)
-                {
-                    word+=a.a[0];
-                    if(a.a[0]=='"') {a.a.erase(0,1); break;}
-                    else a.a.erase(0,1);
-                }
-                if(a.a.length()) if(a.a[0]!=' ') throw 0;
-            }
+            op[opt]=1;            
+
             if(opt=="-ISBN")
             {
                 Book trial;
@@ -387,17 +364,6 @@ class Manager
             string msg=a.get_string();
             // checkEmpty(a);
             string opt=getOpt(msg),word=getWord(msg);
-            if(word[0]=='"'&&(word[(int)(word.size())-1]!='"'||word.size()==1)&(opt=="-author"||opt=="-keyword"||opt=="-name"))
-            {
-                assert(0);
-                while(a.a.length()!=0)
-                {
-                    word+=a.a[0];
-                    if(a.a[0]=='"') {a.a.erase(0,1); break;}
-                    else a.a.erase(0,1);
-                }
-                if(a.a.length()) if(a.a[0]!=' ') throw 0;
-            }
             if(opt!="-ISBN"&&opt!="-price") word.erase(0,1),word.erase(word.size()-1,1);
             if(opt=="-ISBN")
             {
@@ -475,5 +441,3 @@ class Manager
 
 
 #endif
-
-
