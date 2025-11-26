@@ -3,7 +3,7 @@
 
 #include<iostream>
 #include<string>
-#include<math>
+#include<math.h>
 
 class Read {
     private:
