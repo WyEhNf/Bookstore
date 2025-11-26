@@ -89,7 +89,7 @@ double string_to_double(std::string &x) {
     if (!lsize) throw 0;//不能 .12
     if (turn && !rsize) throw 0;//不能 12.
     if (rsize > 2) throw 0;
-    if((std::floor(res)!=0&&x[0]=='0') throw 0;
+    if(std::floor(res)!=0&&x[0]=='0') throw 0;
     return zf ? -res : res;
 }
 
