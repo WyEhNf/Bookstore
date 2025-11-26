@@ -49,6 +49,7 @@ int string_to_int(std::string &x) {
         res = res * 10 + x[i] - '0';
         if (res > 2147483647) throw 0;
     }
+    if(res==0&&k!=0) throw 0; 
     return zf ? -res : res;
 };
 
@@ -67,6 +68,7 @@ double string_to_double(std::string &x) {
             if (x[i] == '.') {
                 if (turn) throw 0;
                 turn = 1;
+                if(i!=1&res==0) throw 0;
                 continue;
             }
             throw 0;
