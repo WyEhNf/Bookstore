@@ -52,7 +52,7 @@ class Book
         }
         bool operator >= (const Book &A) const
         {
-            return !((*this)>A);
+            return !((*this)<A);
         }
 };
 std::ostream &operator << (std:: ostream &out,const Book & obj)
@@ -63,3 +63,4 @@ std::ostream &operator << (std:: ostream &out,const Book & obj)
 
 
 #endif
+
