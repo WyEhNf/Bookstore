@@ -9,6 +9,7 @@ class Read {
     private:
         std::string a;
         friend class Manager;
+        friend int main();
     
     public:
         void check() {
