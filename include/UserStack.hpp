@@ -82,10 +82,12 @@ class UserStack
         {
             checkString(a);
             string ID=a.get_string();
+            checkString(ID);
             // std::cerr<<"ID "<<ID<<'\n';
             if(a.length()!=0)
             {
                 string passwd=a.get_string();
+                checkString(passwd);
                 // std::cerr<<passwd<<'\n';
                 if(a.length()) throw 0;
                 User cur;
@@ -113,11 +115,11 @@ class UserStack
         void Register(Read &a)
         {
             checkString(a);
-            string ID=a.get_string();
+            string ID=a.get_string(); checkString(ID);
             checkString(a);
-            string passwd=a.get_string();
+            string passwd=a.get_string(); checkString(passwd);
             checkString(a);
-            string username=a.get_string();
+            string username=a.get_string();checkName(username);
             checkEmpty(a);
             if(buc.inStore(ID)) throw 0;
             buc.user_create(ID,passwd,username,1);
@@ -126,10 +128,12 @@ class UserStack
         {
             checkString(a);
             string ID=a.get_string();
+            checkString(ID);
             User target;
             if(!buc.get_user(ID,target)) throw 0;
             checkString(a);
             string pass1=a.get_string();
+            checkString(pass1);
             if(!a.length())
             {
                 User cur=getTop(); 
@@ -137,6 +141,7 @@ class UserStack
                 buc.change_password(ID,pass1);
             }else{
                 string pass2=a.get_string();
+                checkString(pass2);
                 checkEmpty(a);
                 if(target.password!=pass1) throw 0;
                 buc.change_password(ID,pass1,pass2);
@@ -146,11 +151,11 @@ class UserStack
         {
             User op=getTop();
             checkString(a);
-            string ID=a.get_string();
+            string ID=a.get_string(); checkString(ID);
             checkString(a);
             User cur;
             if(buc.get_user(ID,cur)) throw 0;
-            string passwd=a.get_string();
+            string passwd=a.get_string(); checkString(passwd);
             checkString(a);
             string pri_st=a.get_string();
             if(pri_st.size()>1||pri_st.size()==0) throw 0;
@@ -159,7 +164,7 @@ class UserStack
             if(!checkPrivilege(pri)) throw 0;
             if(!isInteger(pri_st)) throw 0; 
             if(pri>=op.Privilege) throw 0;
-            string username=a.get_string();
+            string username=a.get_string(); checkName(username);
             checkEmpty(a);
             buc.user_create(ID,passwd,username,pri);
         }
@@ -168,7 +173,7 @@ class UserStack
             checkString(a);
             User cur=getTop();
             if(cur.Privilege!=7) throw 0;
-            string ID=a.get_string();
+            string ID=a.get_string(); checkString(ID);
             checkEmpty(a);
             User target;
             if(!buc.get_user(ID,target)) throw 0;
@@ -182,6 +187,7 @@ class UserStack
 
 
 #endif
+
 
 
 
