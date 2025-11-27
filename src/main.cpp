@@ -31,7 +31,7 @@ int main()
         try{
             std::string st;
             getline(std::cin,st);
-            for(auto c: st) if((int)(c)>=20&&(int)(c)<32) assert(0);
+            for(auto c: st) if((int)(c)>=127) assert(0);
             string stcop=st;
             Read a(st);
             checkStr(a);
@@ -108,6 +108,7 @@ int main()
     return 0;
 
 }
+
 
 
 
