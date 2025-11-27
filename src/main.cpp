@@ -31,10 +31,11 @@ int main()
         try{
             std::string st;
             getline(std::cin,st);
-            for(auto c: st) if((int)(c)>=127) assert(0);
+            // for(auto c: st) if((int)(c)>=127) assert(0); 
             string stcop=st;
             Read a(st);
             checkStr(a);
+            for(int i=1;i<a.a.size();++i) if(a.a[i]==' '&&a.a[i-1]==' ') assert(0);
             if(!a.length()) continue;
             string op=a.get_string();
             // std::cerr<<op<<'\n';
@@ -108,6 +109,7 @@ int main()
     return 0;
 
 }
+
 
 
 
