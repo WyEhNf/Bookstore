@@ -153,6 +153,7 @@ class UserStack
             string passwd=a.get_string();
             checkString(a);
             string pri_st=a.get_string();
+            if(pri_st.size()>1||pri_st.size()==0) throw 0;
             checkString(a);
             int pri=string_to_int(pri_st);
             if(!checkPrivilege(pri)) throw 0;
@@ -181,6 +182,7 @@ class UserStack
 
 
 #endif
+
 
 
 
