@@ -106,6 +106,8 @@ class UserStack
         }
         void Logout()
         {
+            User op=getTop();
+            if(op.Privilege<1) throw 0;
             if(Stack.empty()) throw 0;
             User cur=getTop();
             buc.UserList.del(cur.UserID,cur);
@@ -126,6 +128,8 @@ class UserStack
         }
         void Password(Read &a)
         {
+            User op=getTop();
+            if(op.Privilege<1) throw 0;
             checkString(a);
             string ID=a.get_string();
             checkString(ID);
@@ -188,7 +192,6 @@ class UserStack
 
 
 #endif
-
 
 
 
