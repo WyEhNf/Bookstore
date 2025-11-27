@@ -21,7 +21,7 @@ class Finance
         }
         bool operator != (const Finance &A) const
         {
-            return id==A.id;
+            return id!=A.id;
         }
         bool operator < (const Finance &A) const
         {
@@ -55,4 +55,5 @@ std::ostream &operator <<(std::ostream &out, const Finance &now) {
     out << std::fixed << std::setprecision(2) << "+ " << now.income << " - " << now.outcome << std::fixed << std::setprecision(0);
     return out;
 }
+
 #endif
