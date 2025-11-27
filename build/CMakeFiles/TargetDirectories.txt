@@ -1,3 +1,0 @@
-E:/Code/Bookstore-main/build/CMakeFiles/BookStore.dir
-E:/Code/Bookstore-main/build/CMakeFiles/edit_cache.dir
-E:/Code/Bookstore-main/build/CMakeFiles/rebuild_cache.dir

@@ -1,97 +1,108 @@
 #ifndef READ_HPP
 #define READ_HPP
 
-#include<iostream>
-#include<string>
-#include<math.h>
+#include <iostream>
+#include <math.h>
+#include <string>
 
 class Read {
-    private:
-        std::string a;
-        friend class Manager;
-        friend int main();
-    
-    public:
-        void check() {
-            while (!a.empty() && a[0] == ' ') a.erase(0, 1);
-            int k = a.length();
-            while (k && a[k - 1] == ' ') k--, a.erase(k, 1);
-        }
+private:
+  std::string a;
+  friend class Manager;
+  friend int main();
 
-        Read() {}
-        Read(std::string a) :a(a) {
-            check();
-        }    
+public:
+  void check() {
+    while (!a.empty() && a[0] == ' ')
+      a.erase(0, 1);
+    int k = a.length();
+    while (k && a[k - 1] == ' ')
+      k--, a.erase(k, 1);
+  }
 
-        int length() {
-            check();
-            return a.length();
-        }
+  Read() {}
+  Read(std::string a) : a(a) { check(); }
 
-        std::string get_string() {
-            check();
-            if (!a.length()) throw 0;
-            std::string re = "";
-            while (!a.empty() && a[0] != ' ') {
-                re += a[0];
-                a.erase(0, 1);
-            }
-            return re;
-        }
+  int length() {
+    check();
+    return a.length();
+  }
+
+  std::string get_string() {
+    check();
+    if (!a.length())
+      throw 0;
+    std::string re = "";
+    while (!a.empty() && a[0] != ' ') {
+      re += a[0];
+      a.erase(0, 1);
+    }
+    return re;
+  }
 };
 
-int string_to_int(std::string &x) {
-    long long res = 0; bool zf = 0;
-    int k = x.length();
-    for (int i = 0; i < k; i++) {
-        if (x[i] < '0' || x[i] > '9') {
-            if (x[i] == '-' && !i) {zf = 1; continue;}
-            throw 0;
-        }
-        res = res * 10 + x[i] - '0';
-        if (res > 2147483647) throw 0;
+int string_to_int(std::string &st) {
+  long long res = 0;
+  bool sgn = 0;
+  int k = st.length();
+  for (int i = 0; i < k; i++) {
+    if (!isdigit (st[i])) {
+      if (st[i] == '-' && !i) {
+        sgn = 1;
+        continue;
+      }
+      throw 0;
     }
-    if(res==0&&k!=1) throw 0; 
-    if(res!=0&&x[0]=='0') throw 0;
-    return zf ? -res : res;
+    res = res * 10 + st[i] - '0';
+    if (res > 2147483647) throw 0;
+  }
+  if (res == 0 && k != 1) throw 0;
+  if (res != 0 && st[0] == '0') throw 0;
+  return sgn ? -res : res;
 };
 
-bool isInteger(std:: string &x)
-{
-    for(auto c: x) if(c=='.') return false;
-    return true;
+bool isInteger(std::string &st) {
+  for (auto c : st)
+    if (c == '.')
+      return false;
+  return true;
 }
 
-double string_to_double(std::string &x) {
-    double res = 0; bool zf = 0, turn = 0;
-    int k = x.length(); int lsize = 0, rsize = 0; double di = 1;
-    for (int i = 0; i < k; i++) {
-        if (x[i] < '0' || x[i] > '9') {
-            if (x[i] == '-' && !i) {zf = 1; continue;}
-            if (x[i] == '.') {
-                if (turn) throw 0;
-                turn = 1;
-                if(i!=1&res==0) throw 0;
-                continue;
-            }
-            throw 0;
-        }
-        if (!turn) {
-            lsize++;
-            res = res * 10 + x[i] - '0';
-        }
-        else {
-            rsize++;
-            di = di * 0.1;
-            res = res + di * (x[i] - '0');
-        }
-        if (res > 2147483647) throw 0;
+double string_to_double(std::string &st) {
+  double res = 0;
+  bool sgn = 0, turn = 0;
+  int k = st.length();
+  int intSize = 0, dotSize = 0;
+  double di = 1;
+  for (int i = 0; i < k; i++) {
+    if (!isdigit (st[i])) {
+      if (st[i] == '-' && !i) {
+        sgn = 1;
+        continue;
+      }
+      if (st[i] == '.') {
+        if (turn) throw 0;
+        turn = 1;
+        if (i != 1 & res == 0) throw 0;
+        continue;
+      }
+      throw 0;
     }
-    if (!lsize) throw 0;//不能 .12
-    if (turn && !rsize) throw 0;//不能 12.
-    if (rsize > 2) throw 0;
-    if(std::floor(res)!=0&&x[0]=='0') throw 0;
-    return zf ? -res : res;
+    if (!turn) {
+      intSize++;
+      res = res * 10 + st[i] - '0';
+    } else {
+      dotSize++;
+      di = di * 0.1;
+      res = res + di * (st[i] - '0');
+    }
+    if (res > 2147483647) throw 0;
+  }
+  if (!intSize) throw 0; 
+  if (turn && !dotSize) throw 0; 
+  if (dotSize > 2) throw 0;
+  if (std::floor(res) != 0 && st[0] == '0') throw 0;
+  return sgn ? -res : res;
 }
 
-#endif 
+#endif
