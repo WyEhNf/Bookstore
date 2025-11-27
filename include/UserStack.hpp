@@ -150,6 +150,7 @@ class UserStack
         void Create(Read &a)
         {
             User op=getTop();
+            if(op.Privilege<3) throw 0;
             checkString(a);
             string ID=a.get_string(); checkString(ID);
             checkString(a);
@@ -187,6 +188,7 @@ class UserStack
 
 
 #endif
+
 
 
 
