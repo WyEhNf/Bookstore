@@ -289,7 +289,7 @@ class Manager
 
         BookStore.del(target.ID,target);
         target.Quantity-=quantity;
-        std::cout<<std::fixed<<std::setprecision(2)<<1.0*quantity*target.Price<<'\t'<<std::setprecision(0)<<'\n';
+        std::cout<<std::fixed<<std::setprecision(2)<<1.0*quantity*target.Price<<'\t'<<std::fixed<<std::setprecision(0)<<'\n';
         BookStore.ins(target.ID,target);
 
         Finance rec(Finance_Record.cnt+1,1.0*quantity*target.Price,0);
@@ -443,4 +443,5 @@ class Manager
 
 
 #endif
+
 
