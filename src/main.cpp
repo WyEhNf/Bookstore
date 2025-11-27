@@ -67,8 +67,9 @@ int main()
             }else if(op=="show")
             {
                 Read cop=a;
-                if(cop.length()&&cop.get_string()=="finance")
+                if(cop.length())
                 {
+                    if(cop.get_string()!="finance") throw 0;
                     string tmp=a.get_string();
                     if(a.length()) throw 0;
                     Finance_Record.print(a);
@@ -109,6 +110,7 @@ int main()
     return 0;
 
 }
+
 
 
 
