@@ -67,9 +67,8 @@ int main()
             }else if(op=="show")
             {
                 Read cop=a;
-                if(cop.length())
+                if(cop.length()&&cop.get_string()=="finance")
                 {
-                    if(cop.get_string()!="finance") throw 0;
                     string tmp=a.get_string();
                     Finance_Record.print(a);
                 }else BookManager.show(a);
@@ -109,6 +108,7 @@ int main()
     return 0;
 
 }
+
 
 
 
