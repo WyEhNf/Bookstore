@@ -50,7 +50,7 @@ int string_to_int(std::string &x) {
         res = res * 10 + x[i] - '0';
         if (res > 2147483647) throw 0;
     }
-    if(res==0&&k!=0) throw 0; 
+    if(res==0&&k!=1) throw 0; 
     if(res!=0&&x[0]=='0') throw 0;
     return zf ? -res : res;
 };
