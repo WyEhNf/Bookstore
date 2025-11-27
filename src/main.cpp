@@ -70,6 +70,7 @@ int main()
                 if(cop.length()&&cop.get_string()=="finance")
                 {
                     string tmp=a.get_string();
+                    if(a.length()) throw 0;
                     Finance_Record.print(a);
                 }else BookManager.show(a);
                 // std::cerr<<"Done.\n";
@@ -108,6 +109,7 @@ int main()
     return 0;
 
 }
+
 
 
 
