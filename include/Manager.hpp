@@ -76,8 +76,7 @@ public:
         if (key.find(cur) != key.end()) throw 0;
         key[cur] = 1;
         cur = "";
-      } else
-        cur += Keyword[i];
+      } else cur += Keyword[i];
     }
     if (cur.size() == 0) throw 0;
     if (key.find(cur) != key.end()) throw 0;
@@ -332,8 +331,7 @@ public:
           if (c == '|') {
             Keyword_Store.del(cur, selected.ID);
             cur = "";
-          } else
-            cur += c;
+          } else cur += c;
         }
         Keyword_Store.del(cur, selected.ID);
         cur = "";
@@ -342,8 +340,7 @@ public:
           if (c == '|') {
             Keyword_Store.ins(cur, selected.ID);
             cur = "";
-          } else
-            cur += c;
+          } else cur += c;
         }
         Keyword_Store.ins(cur, selected.ID);
 

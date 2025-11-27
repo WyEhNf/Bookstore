@@ -39,9 +39,7 @@ public:
   }
   void print(Read &a) {
     User cur = Stack.getTop();
-    if (cur.Privilege < 7) {
-      throw 0;
-    }
+    if (cur.Privilege < 7) throw 0;
     Finance res = Finance();
     if (a.length() == 0) {
       if (cnt)
@@ -49,15 +47,11 @@ public:
       std::cout << res << '\n';
     } else {
       string Count_st = a.get_string();
-      if (!isInteger(Count_st))
-        throw 0;
+      if (!isInteger(Count_st)) throw 0;
       int Count = string_to_int(Count_st);
-      if (a.length())
-        throw 0;
-      if (Count > cnt)
-        throw 0;
-      if (Count < 0)
-        throw 0;
+      if (a.length()) throw 0;
+      if (Count > cnt) throw 0;
+      if (Count < 0) throw 0;
       if (Count == 0) {
         std::cout << '\n';
         return;
