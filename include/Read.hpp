@@ -15,9 +15,9 @@ public:
   void check() {
     while (!a.empty() && a[0] == ' ')
       a.erase(0, 1);
-    int k = a.length();
-    while (k && a[k - 1] == ' ')
-      k--, a.erase(k, 1);
+    int pos = a.length();
+    while (pos && a[pos - 1] == ' ')
+      pos--, a.erase(pos, 1);
   }
 
   Read() {}
@@ -44,8 +44,8 @@ public:
 int string_to_int(std::string &st) {
   long long res = 0;
   bool sgn = 0;
-  int k = st.length();
-  for (int i = 0; i < k; i++) {
+  int len = st.length();
+  for (int i = 0; i < len; i++) {
     if (!isdigit (st[i])) {
       if (st[i] == '-' && !i) {
         sgn = 1;
@@ -56,7 +56,7 @@ int string_to_int(std::string &st) {
     res = res * 10 + st[i] - '0';
     if (res > 2147483647) throw 0;
   }
-  if (res == 0 && k != 1) throw 0;
+  if (res == 0 && len != 1) throw 0;
   if (res != 0 && st[0] == '0') throw 0;
   return sgn ? -res : res;
 };
@@ -71,10 +71,10 @@ bool isInteger(std::string &st) {
 double string_to_double(std::string &st) {
   double res = 0;
   bool sgn = 0, turn = 0;
-  int k = st.length();
+  int len = st.length();
   int intSize = 0, dotSize = 0;
   double di = 1;
-  for (int i = 0; i < k; i++) {
+  for (int i = 0; i < len; i++) {
     if (!isdigit (st[i])) {
       if (st[i] == '-' && !i) {
         sgn = 1;

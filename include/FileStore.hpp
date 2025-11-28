@@ -107,8 +107,7 @@ public:
     else {
       for (int i = 1; i <= len; ++i) {
         if (Store[i] > cur) {
-          p = i;
-          break;
+          p = i; break;
         }
       }
       if (p == -1)
@@ -127,7 +126,6 @@ public:
       block new_Store;
       new_point.mx = Store[point.size];
       int cut_pos = point.size - (point.size >> 1);
-      // std::cerr<<"CUT:"<<cut_pos<<'\n';
       for (int i = cut_pos + 1; i <= point.size; ++i)
         new_Store[i - cut_pos] = Store[i],
                       new_point.mx = std::max(new_point.mx, Store[i]),
@@ -169,8 +167,7 @@ public:
     array.read(Store, point.id);
     for (int i = 1; i <= len; ++i)
       if (Store[i] == cur) {
-        p = i;
-        break;
+        p = i; break;
       }
     if (p == -1)
       return;
@@ -208,16 +205,14 @@ public:
     while (head != -1) {
       head_list.read(point, pos);
       if (point.nxt == -1 || point.size == 0 || point.mx.index == cur.index ||
-          point.mx > cur)
-        break;
+          point.mx > cur) break;
       pos = point.nxt;
     }
     array.read(Store, point.id);
     int p = -1, len = point.size;
     for (int i = 1; i <= len; ++i) {
       if (Store[i].index == cur.index) {
-        p = i;
-        break;
+        p = i; break;
       }
     }
     if (p == -1)
