@@ -48,7 +48,7 @@ FileStore的实现方法如上。
 
 ```
 root
-├── src
+├── include
 │   ├── BookSys.hpp #图书系统
 │   ├── AccountSys.hpp #账户系统
 │   ├── Book.hpp #图书类
@@ -56,7 +56,7 @@ root
 │   ├── Chars.hpp #字符串类
 │   └── Command.hpp #指令解析器
 │   └── FileStore.hpp #文件存储类
-└── include
+└── src
     └── main.cpp
 ```
 
