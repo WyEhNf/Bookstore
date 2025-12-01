@@ -3,95 +3,17 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-const int SIZE = 300;
-
-using std::fstream;
-using std::ifstream;
-using std::ofstream;
-using std::string;
-
-template <class T, int info_len = 2> class MemoryRiver {
-private:
-  fstream file;
-  string file_name;
-  int sizeofT = sizeof(T);
-
-public:
-  MemoryRiver() = default;
-
-  MemoryRiver(const string &file_name) : file_name(file_name) {}
-
-  ~MemoryRiver() { file.close(); }
-
-  void initialise(string FN = "") {
-    if (FN != "")
-      file_name = FN;
-    if (std::filesystem::exists(file_name)) {
-      file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
-      file.seekp(info_len * sizeof(int), std::ios_base::beg);
-      file.close();
-      file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
-      return;
-    }
-    file.open(file_name, std::ios::out | std::ios::binary);
-    int tmp = 0;
-    for (int i = 0; i < info_len; ++i)
-      file.write(reinterpret_cast<char *>(&tmp), sizeof(int));
-    file.close();
-    file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
-  }
-
-  // 读出第n个int的值赋给tmp，1_base
-  void get_info(int &tmp, int n) {
-    if (n > info_len)
-      return;
-    file.seekg((n - 1) * sizeof(int), std::ios_base::beg);
-    file.read(reinterpret_cast<char *>(&tmp), sizeof(int));
-  }
-
-  void write_info(int tmp, int n) {
-    if (n > info_len)
-      return;
-    file.seekp((n - 1) * sizeof(int), std::ios_base::beg);
-    file.write(reinterpret_cast<char *>(&tmp), sizeof(int));
-  }
-
-  // 在文件合适位置写入类对象t，并返回写入的位置索引index
-  // 位置索引意味着当输入正确的位置索引index，在以下三个函数中都能顺利的找到目标对象进行操作
-  // 位置索引index可以取为对象写入的起始位置
-  int write(T &t) {
-    file.seekp(0, std::ios::end);
-    int index = file.tellp();
-    file.write(reinterpret_cast<char *>(&t), sizeof(T));
-    return index;
-  }
-
-  // 用t的值更新位置索引index对应的对象，保证调用的index都是由write函数产生
-  void update(T &t, const int index) {
-    file.seekp(index, std::ios_base::beg);
-    file.write(reinterpret_cast<char *>(&t), sizeof(T));
-  }
-
-  // 读出位置索引index对应的T对象的值并赋值给t，保证调用的index都是由write函数产生
-  void read(T &t, const int index) {
-    file.seekg(index, std::ios_base::beg);
-    file.read(reinterpret_cast<char *>(&t), sizeof(T));
-  }
-
-  // 删除位置索引index对应的对象(不涉及空间回收时，可忽略此函数)，保证调用的index都是由write函数产生
-  void Delete(int index) { /* your code here */ }
-};
 
 struct chars {
 public:
-  char a[80];
+  char a[61];
 
   chars() { a[0] = 0; }
 
-  chars(std::string &st) {
-    int len = st.length();        
-    if (len > 70) throw 0;
-    for (int i = 0; i < len; i++) a[i] = st[i];
+  chars(std::string &x) {
+    int len = x.length();
+    for (int i = 0; i < len; i++)
+      a[i] = x[i];
     a[len] = 0;
   }
 
@@ -101,8 +23,10 @@ public:
     if (strlen(a) != strlen(other.a))
       return 0;
     for (int i = 0; i < strlen(a); i++)
-      if (a[i] != other.a[i]) return 0;
-      else if (!a[i])return 1;
+      if (a[i] != other.a[i])
+        return 0;
+      else if (!a[i])
+        return 1;
     return 1;
   }
   bool operator!=(const chars other) const { return !(*this == other); }
@@ -122,19 +46,22 @@ public:
   bool operator>=(const chars other) const { return !(*this < other); }
 };
 
-chars Chars(std::string st) {
-  int len = st.length();
+chars Chars(std::string x) {
+  int len = x.length();
   chars res;
-  for (int i = 0; i < len; i++) res[i] = st[i];
-  for (int i = len; i < 61; i++) res[i] = 0;
+  for (int i = 0; i < len; i++)
+    res[i] = x[i];
+  for (int i = len; i < 61; i++)
+    res[i] = 0;
   return res;
 }
 
-std::string String(chars st) {
-  int len = strlen(st.a);
+std::string String(chars x) {
+  int len = strlen(x.a);
   std::string res;
   res.resize(len);
-  for (int i = 0; i < len; i++) res[i] = st.a[i];
+  for (int i = 0; i < len; i++)
+    res[i] = x.a[i];
   return res;
 }
 
@@ -142,6 +69,107 @@ std::ostream &operator<<(std::ostream &out, const chars &now) {
   out << now.a;
   return out;
 }
+
+using std::fstream;
+using std::ifstream;
+using std::ofstream;
+using std::string;
+
+template <class T, int info_len = 2> class MemoryRiver {
+private:
+  /* your code here */
+  fstream file;
+  string file_name;
+  int sizeofT = sizeof(T);
+
+public:
+  MemoryRiver() = default;
+
+  MemoryRiver(const string &file_name) : file_name(file_name) {}
+
+  ~MemoryRiver() {
+    // std::cerr << "close initialise\n";
+    file.close();
+  }
+
+  void initialise(string FN = "") {
+    // std::cerr << FN << std::endl;
+    if (FN != "")
+      file_name = FN;
+    if (std::filesystem::exists(file_name)) {
+      file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
+      file.seekp(info_len * sizeof(int), std::ios_base::beg);
+      file.close();
+      file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
+      return;
+    }
+    // std::cerr << "new initialise :" << FN << "\n";
+    file.open(file_name, std::ios::out | std::ios::binary);
+    int tmp = 0;
+    for (int i = 0; i < info_len; ++i)
+      file.write(reinterpret_cast<char *>(&tmp), sizeof(int));
+    file.close();
+    file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
+  }
+
+  // 读出第n个int的值赋给tmp，1_base
+  void get_info(int &tmp, int n) {
+    if (n > info_len)
+      return;
+    /* your code here */
+    // file.open(file_name, std::ios::in);
+    file.seekg((n - 1) * sizeof(int), std::ios_base::beg);
+    file.read(reinterpret_cast<char *>(&tmp), sizeof(int));
+    // file.close();
+  }
+
+  // 将tmp写入第n个int的位置，1_base
+  void write_info(int tmp, int n) {
+    if (n > info_len)
+      return;
+    /* your code here */
+    // file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
+    file.seekp((n - 1) * sizeof(int), std::ios_base::beg);
+    file.write(reinterpret_cast<char *>(&tmp), sizeof(int));
+    // file.close();
+  }
+
+  // 在文件合适位置写入类对象t，并返回写入的位置索引index
+  // 位置索引意味着当输入正确的位置索引index，在以下三个函数中都能顺利的找到目标对象进行操作
+  // 位置索引index可以取为对象写入的起始位置
+  int write(T &t) {
+    /* your code here */
+    // file.open(file_name, std::ios::app | std::ios::binary);
+    file.seekp(0, std::ios::end);
+    int index = file.tellp();
+    file.write(reinterpret_cast<char *>(&t), sizeof(T));
+    // file.close();
+    return index;
+  }
+
+  // 用t的值更新位置索引index对应的对象，保证调用的index都是由write函数产生
+  void update(T &t, const int index) {
+    /* your code here */
+    // file.open(file_name, std::ios::in | std::ios::out | std::ios::binary);
+    file.seekp(index, std::ios_base::beg);
+    file.write(reinterpret_cast<char *>(&t), sizeof(T));
+    // file.close();
+  }
+
+  // 读出位置索引index对应的T对象的值并赋值给t，保证调用的index都是由write函数产生
+  void read(T &t, const int index) {
+    /* your code here */
+    // file.open(file_name, std::ios::in | std::ios::binary);
+    file.seekg(index, std::ios_base::beg);
+    file.read(reinterpret_cast<char *>(&t), sizeof(T));
+    // file.close();
+  }
+
+  // 删除位置索引index对应的对象(不涉及空间回收时，可忽略此函数)，保证调用的index都是由write函数产生
+  void Delete(int index) { /* your code here */ }
+};
+
+const int SIZE = 300;
 
 template <typename indextype, typename valuetype> class FileStore {
   class data {
@@ -167,8 +195,9 @@ template <typename indextype, typename valuetype> class FileStore {
       return (index == A.index) ? value < A.value : index < A.index;
     }
     bool operator<=(const data &A) const {
-      return (*this == A) ? 1
-            : ((index == A.index) ? value < A.value : index < A.index);
+      return (*this == A)
+                 ? 1
+                 : ((index == A.index) ? value < A.value : index < A.index);
     }
     bool operator>(const data &A) const {
       return (index == A.index) ? value > A.value : index > A.index;
@@ -205,11 +234,14 @@ private:
 
 public:
   FileStore() {
-     head_list.initialise("_head");
-      if (!std::filesystem::exists("_body")) head = -1;
-          else head_list.get_info(head, 1);
-      array.initialise("_body");
+    head_list.initialise("_head");
+    if (!std::filesystem::exists("_body"))
+      head = -1;
+    else
+      head_list.get_info(head, 1);
+    array.initialise("_body");
   }
+
   ~FileStore() { head_list.write_info(head, 1); }
   void ins(const indextype index, const valuetype &value) {
     data cur = data(index, value);
@@ -231,7 +263,6 @@ public:
       }
       array.read(Store, point.id);
     }
-
     int len = point.size, p = -1;
     if (len == 0)
       Store[++point.size] = cur;
@@ -253,6 +284,7 @@ public:
     }
     if (cur > point.mx)
       point.mx = cur;
+
     if (point.size > SIZE) {
       node new_point;
       block new_Store;
@@ -371,38 +403,34 @@ public:
     return res;
   }
 };
-int main()
-{
+int main() {
 
-    int n; std::cin>>n;
-    FileStore <string,int> F;
-    string index;
-    for(int i=1;i<=n;++i)
-    {
-        string opt; std::cin>>opt;
-        int value;
-        if(opt=="insert")
-        {
-            std::cin>>index>>value;
-            F.ins(index,value);
-        }else if(opt=="delete")
-        {
-            std::cin>>index>>value;
-            F.del(index,value); 
-        }else if(opt=="find")
-        {
-            std::cin>>index;
-            std::vector<int> res=F.qry(index);
-            if(res.size()==0) std::cout<<"null"<<std::endl;
-            else
-            {
-                for(auto x: res)
-                {
-                    std::cout<<x<<' ';
-                }
-                std::cout<<std::endl;
-            }
+  int n;
+  std::cin >> n;
+  FileStore<chars, int> F;
+  chars index;
+  for (int i = 1; i <= n; ++i) {
+    string opt;
+    std::cin >> opt;
+    int value;
+    if (opt == "insert") {
+      std::cin >> index.a >> value;
+      F.ins(index, value);
+    } else if (opt == "delete") {
+      std::cin >> index.a >> value;
+      F.del(index, value);
+    } else if (opt == "find") {
+      std::cin >> index.a;
+      std::vector<int> res = F.qry(index);
+      if (res.size() == 0)
+        std::cout << "null" << std::endl;
+      else {
+        for (auto x : res) {
+          std::cout << x << ' ';
         }
+        std::cout << std::endl;
+      }
     }
-    return 0;
+  }
+  return 0;
 }
