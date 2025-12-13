@@ -6,7 +6,7 @@
 
 struct chars {
 public:
-  char a[61];
+  char a[70];
 
   chars() { a[0] = 0; }
 
@@ -404,6 +404,9 @@ public:
   }
 };
 int main() {
+  
+  freopen("FileStore.in","r",stdin);
+  freopen("FileStore.out","w",stdout);
 
   int n;
   std::cin >> n;
@@ -412,6 +415,7 @@ int main() {
   for (int i = 1; i <= n; ++i) {
     string opt;
     std::cin >> opt;
+    // std::cerr<<opt<<'\n';
     int value;
     if (opt == "insert") {
       std::cin >> index.a >> value;
