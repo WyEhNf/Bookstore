@@ -9,7 +9,6 @@ include_directories(include)
 add_executable(code
         src/Financesys.cpp
         src/Manager.cpp
-        src/MemoryRiver.cpp
         src/UserStack.cpp
         src/UserStore.cpp
         src/main.cpp
